@@ -1,4 +1,4 @@
-# Collectathon instructions
+# Collectathon Instructions
 An exercise for collaborating with git / GitHub. Please read the directions CAREFULLY!
 
 ## Tip on vim:
