@@ -1,3 +1,3 @@
 # collectathon
-Hello World
+Hello World World Hello
 A template to explore GBA games and collaboration with git/GitHub. Please see the instructions in [instructions.md](./instructions.md).
