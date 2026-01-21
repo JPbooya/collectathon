@@ -19,6 +19,8 @@ A place to write your findings and plans
 14. Line 100: A randomizer for the location of the yellow circle after the display updates.
 
 ## Planning required changes
+1. At Line 17, we can change the fixed speed integer to change the speed of the player.
+2. Since there's no code the background color, we'll implement it ourselves in the main file.
 
 ## Brainstorming game ideas
 
