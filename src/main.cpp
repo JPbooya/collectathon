@@ -27,6 +27,7 @@ static constexpr bn::fixed BOOST = 4;
 // Width and height of the the player and treasure bounding boxes
 static constexpr bn::size PLAYER_SIZE = {8, 8};
 static constexpr bn::size TREASURE_SIZE = {8, 8};
+static constexpr bn::size OBSTACLE_SIZE = {8, 8};
 
 // Full bounds of the screen
 static constexpr int MIN_Y = -bn::display::height() / 2;
@@ -61,6 +62,7 @@ int main()
     bn::core::init();
 
     bn::random rng = bn::random();
+    bn::random obstacle_rng = bn::random();
 
     // Background Color
     bn::backdrop::set_color(bn::color(10, 10, 22));
@@ -73,8 +75,8 @@ int main()
 
     bn::sprite_ptr player = bn::sprite_items::square.create_sprite(PLAYER_X, PLAYER_Y);
     bn::sprite_ptr treasure = bn::sprite_items::dot.create_sprite(TREASURE_X, TREASURE_Y);
-    bn::sprite_ptr rock1 = bn::sprite_items::obstacle.create_sprite(OBSTACLE1_X, OBSTACLE1_Y);
-    bn::sprite_ptr rock2 = bn::sprite_items::obstacle.create_sprite(OBSTACLE2_X, OBSTACLE2_Y);
+    bn::sprite_ptr obstacle1 = bn::sprite_items::obstacle.create_sprite(OBSTACLE1_X, OBSTACLE1_Y);
+    bn::sprite_ptr obstacle2 = bn::sprite_items::obstacle.create_sprite(OBSTACLE2_X, OBSTACLE2_Y);
 
     // For the speed boost
     int timer = 0;
@@ -152,6 +154,14 @@ int main()
                                           treasure.y().round_integer(),
                                           TREASURE_SIZE.width(),
                                           TREASURE_SIZE.height());
+        bn::rect obstacle1_rect = bn::rect(obstacle1.x().round_integer(),
+                                          obstacle1.y().round_integer(),
+                                          OBSTACLE_SIZE.width(),
+                                          OBSTACLE_SIZE.height());
+        bn::rect obstacle2_rect = bn::rect(obstacle2.x().round_integer(),
+                                          obstacle2.y().round_integer(),
+                                          OBSTACLE_SIZE.width(),
+                                          OBSTACLE_SIZE.height());
 
         // If the bounding boxes overlap, set the treasure to a new location an increase score
         if (player_rect.intersects(treasure_rect))
@@ -162,6 +172,23 @@ int main()
             treasure.set_position(new_x, new_y);
 
             score++;
+        }
+
+        if (player_rect.intersects(obstacle1_rect) || player_rect.intersects(obstacle2_rect)) {
+
+            int new_x = rng.get_int(MIN_X, MAX_X);
+            int new_y = rng.get_int(MIN_Y, MAX_Y);
+            treasure.set_position(new_x, new_y);
+
+            int new_x_2 = obstacle_rng.get_int(MIN_X, MAX_X);
+            int new_y_2 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            obstacle1.set_position(new_x_2, new_y_2);
+
+            int new_x_3 = obstacle_rng.get_int(MIN_X, MAX_X);
+            int new_y_3 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            obstacle2.set_position(new_x_3, new_y_3);
+
+            score--;
         }
 
         // When user wants to reset level
@@ -200,6 +227,7 @@ int main()
 
         // Update RNG seed every frame so we don't get the same sequence of positions every time
         rng.update();
+        obstacle_rng.update();
 
         bn::core::update();
     }
