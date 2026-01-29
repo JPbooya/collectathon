@@ -34,14 +34,12 @@ A place to write your findings and plans
 
 ## Brainstorming game ideas
 1. Press L or R buttons to change the background color. L for red and R for blue.
-2. Press B to randomize the location of the treasure again, but you'll minus the score
-   by 1 if you do.
+2. Press B to randomize the location of the treasure again.
 3. Add new sprites that'll represent the obstacle.
 
 ## Plan for implementing game
 1. if statements when l and r buttons pressed for the background color.
-2. if statement when b button pressed for randomizing the treasure location again. Similar to the
-   code for when the player intersects the treasure.
+2. if statement when b button pressed for randomizing the treasure location again.
 3. Create the obstacle sprites, give it default locations, and make their location randomized for
    every score update.
 

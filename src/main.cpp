@@ -141,6 +141,11 @@ int main()
             player.set_y(PLAYER_Y);
             treasure.set_x(TREASURE_X);
             treasure.set_y(TREASURE_Y);
+            obstacle1.set_x(OBSTACLE1_X);
+            obstacle1.set_y(OBSTACLE1_Y);
+            obstacle2.set_x(OBSTACLE2_X);
+            obstacle2.set_y(OBSTACLE2_Y);
+
             score = 0;
             aPressed = 0;
         }
@@ -171,6 +176,14 @@ int main()
             int new_y = rng.get_int(MIN_Y, MAX_Y);
             treasure.set_position(new_x, new_y);
 
+            int new_x_2 = obstacle_rng.get_int(MIN_X, MAX_X);
+            int new_y_2 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            obstacle1.set_position(new_x_2, new_y_2);
+
+            int new_x_3 = obstacle_rng.get_int(MIN_X, MAX_X);
+            int new_y_3 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            obstacle2.set_position(new_x_3, new_y_3);
+
             score++;
         }
 
@@ -198,8 +211,6 @@ int main()
             int new_x = rng.get_int(MIN_X, MAX_X);
             int new_y = rng.get_int(MIN_Y, MAX_Y);
             treasure.set_position(new_x, new_y);
-
-            score--;
         }
 
         if (player_rect.x() == MIN_X) {
