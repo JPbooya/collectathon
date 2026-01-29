@@ -12,6 +12,7 @@
 #include "bn_sprite_items_dot.h"
 #include "bn_sprite_items_square.h"
 #include "common_fixed_8x16_font.h"
+#include "bn_sprite_items_rock.h"
 #include <bn_backdrop.h>
 #include <bn_color.h>
 
