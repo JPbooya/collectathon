@@ -72,6 +72,15 @@ int main()
 
     while (true)
     {
+
+        if (bn::keypad::l_pressed()) {
+             bn::backdrop::set_color(bn::color(31, 0, 0));
+        }
+
+        if (bn::keypad::r_pressed()) {
+             bn::backdrop::set_color(bn::color(0, 0, 31));
+        }
+        
         if (bn::keypad::a_pressed() && aPressed != 3) {
             aPressed++;
             while (timer != 5) {
