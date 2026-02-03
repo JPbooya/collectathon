@@ -16,6 +16,9 @@
 #include <bn_backdrop.h>
 #include <bn_color.h>
 
+#include "bn_music_items.h"
+// #include "bn_sound_item._ file-name.h"
+
 
 
 // Pixels / Frame player moves at
@@ -60,6 +63,9 @@ static constexpr int OBSTACLE2_Y = 20;
 int main()
 {
     bn::core::init();
+
+    // Plays music 
+    bn::music_items::afternoon_break_1.play();
 
     bn::random rng = bn::random();
     bn::random obstacle_rng = bn::random();
