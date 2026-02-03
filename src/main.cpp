@@ -231,6 +231,23 @@ int main()
             score-=3;
         }
 
+        // When player reaches the max boundaries
+        if (player_rect.x() == MIN_X) {
+            player.set_x(MAX_X);
+        }
+
+        if (player_rect.x() == MAX_X) {
+            player.set_x(MIN_X);
+        }
+
+        if (player_rect.y() == MIN_Y) {
+            player.set_y(MAX_Y);
+        }
+
+        if (player_rect.y() == MAX_Y) {
+            player.set_y(MIN_Y);
+        }
+
         // Resets the game
         if (bn::keypad::start_pressed()) {
             player.set_x(PLAYER_X);
