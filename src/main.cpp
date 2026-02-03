@@ -16,6 +16,7 @@
 #include <bn_backdrop.h>
 #include <bn_color.h>
 
+#include <bn_music.h>
 #include "bn_music_items.h"
 #include "bn_sound_items.h"
 
@@ -66,6 +67,7 @@ int main()
 
     // Plays music 
     bn::music_items::music_4ch.play();
+    bool music_paused = false;
 
     bn::random rng = bn::random();
     bn::random obstacle_rng = bn::random();
@@ -123,6 +125,16 @@ int main()
                 }
             }
             timer = 0;
+        }
+
+        if (bn::keypad::b_pressed()) {
+            if (music_paused) {
+                bn::music::resume();
+                music_paused = false;
+            } else {
+                bn::music::pause();
+                music_paused = true;
+            }
         }
 
         if (timer == 0) {
@@ -232,31 +244,6 @@ int main()
 
             score = 0;
             aPressed = 0;
-        }
-
-        // When user wants to reset level
-        if (bn::keypad::b_pressed())
-        {
-            // Jump to any random point in the screen
-            int new_x = rng.get_int(MIN_X, MAX_X);
-            int new_y = rng.get_int(MIN_Y, MAX_Y);
-            treasure.set_position(new_x, new_y);
-        }
-
-        if (player_rect.x() == MIN_X) {
-            player.set_x(MAX_X);
-        }
-
-        if (player_rect.x() == MAX_X) {
-            player.set_x(MIN_X);
-        }
-
-        if (player_rect.y() == MIN_Y) {
-            player.set_y(MAX_Y);
-        }
-
-        if (player_rect.y() == MAX_Y) {
-            player.set_y(MIN_Y);
         }
 
         // Update score display
