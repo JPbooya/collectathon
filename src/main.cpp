@@ -67,6 +67,7 @@ int main()
 
     // Plays music 
     bn::music_items::music_4ch.play();
+    bn::music::set_volume(0.1);
     bool music_paused = false;
 
     bn::random rng = bn::random();
@@ -176,6 +177,7 @@ int main()
         {
             // Sound plays
             bn::sound_items::temp_pickup.play();
+            
             // Jump to any random point in the screen
             int new_x = rng.get_int(MIN_X / 2, MAX_X / 2);
             int new_y = rng.get_int(MIN_Y / 2, MAX_Y / 2);
@@ -204,6 +206,9 @@ int main()
         }
 
         if (player_rect.intersects(obstacle1_rect) || player_rect.intersects(obstacle2_rect)) {
+
+            // Plays sound when user hits obstacle
+            bn::sound_items::sound_hit.play();
 
             int new_x = rng.get_int(MIN_X / 2, MAX_X / 2);
             int new_y = rng.get_int(MIN_Y / 2, MAX_Y / 2);
