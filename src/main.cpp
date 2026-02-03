@@ -134,21 +134,6 @@ int main()
                 player.set_y(player.y() + SPEED);
             }
         }
-        
-        // Resets the game
-        if (bn::keypad::start_pressed()) {
-            player.set_x(PLAYER_X);
-            player.set_y(PLAYER_Y);
-            treasure.set_x(TREASURE_X);
-            treasure.set_y(TREASURE_Y);
-            obstacle1.set_x(OBSTACLE1_X);
-            obstacle1.set_y(OBSTACLE1_Y);
-            obstacle2.set_x(OBSTACLE2_X);
-            obstacle2.set_y(OBSTACLE2_Y);
-
-            score = 0;
-            aPressed = 0;
-        }
             
         // The bounding boxes of the player and treasure, snapped to integer pixels
         bn::rect player_rect = bn::rect(player.x().round_integer(),
@@ -172,16 +157,27 @@ int main()
         if (player_rect.intersects(treasure_rect))
         {
             // Jump to any random point in the screen
-            int new_x = rng.get_int(MIN_X, MAX_X);
-            int new_y = rng.get_int(MIN_Y, MAX_Y);
+            int new_x = rng.get_int(MIN_X / 2, MAX_X / 2);
+            int new_y = rng.get_int(MIN_Y / 2, MAX_Y / 2);
             treasure.set_position(new_x, new_y);
 
-            int new_x_2 = obstacle_rng.get_int(MIN_X, MAX_X);
-            int new_y_2 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            int new_x_2 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+            int new_y_2 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            while (new_x_2 == new_x && new_y_2 == new_y) {
+                obstacle_rng.update();
+                new_x_2 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+                new_y_2 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            }
             obstacle1.set_position(new_x_2, new_y_2);
 
-            int new_x_3 = obstacle_rng.get_int(MIN_X, MAX_X);
-            int new_y_3 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            int new_x_3 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+            int new_y_3 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            while (new_x_3 == new_x && new_y_3 == new_y 
+                && new_x_3 == new_x_2 && new_y_3 == new_y_2) {
+                obstacle_rng.update();
+                new_x_3 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+                new_y_3 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            }
             obstacle2.set_position(new_x_3, new_y_3);
 
             score++;
@@ -189,19 +185,45 @@ int main()
 
         if (player_rect.intersects(obstacle1_rect) || player_rect.intersects(obstacle2_rect)) {
 
-            int new_x = rng.get_int(MIN_X, MAX_X);
-            int new_y = rng.get_int(MIN_Y, MAX_Y);
+            int new_x = rng.get_int(MIN_X / 2, MAX_X / 2);
+            int new_y = rng.get_int(MIN_Y / 2, MAX_Y / 2);
             treasure.set_position(new_x, new_y);
 
-            int new_x_2 = obstacle_rng.get_int(MIN_X, MAX_X);
-            int new_y_2 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            int new_x_2 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+            int new_y_2 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            while (new_x_2 == new_x && new_y_2 == new_y) {
+                obstacle_rng.update();
+                new_x_2 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+                new_y_2 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            }
             obstacle1.set_position(new_x_2, new_y_2);
 
-            int new_x_3 = obstacle_rng.get_int(MIN_X, MAX_X);
-            int new_y_3 = obstacle_rng.get_int(MIN_Y, MAX_Y);
+            int new_x_3 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+            int new_y_3 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            while (new_x_3 == new_x && new_y_3 == new_y 
+                && new_x_3 == new_x_2 && new_y_3 == new_y_2) {
+                obstacle_rng.update();
+                new_x_3 = obstacle_rng.get_int(MIN_X / 2, MAX_X / 2);
+                new_y_3 = obstacle_rng.get_int(MIN_Y / 2, MAX_Y / 2);
+            }
             obstacle2.set_position(new_x_3, new_y_3);
 
-            score--;
+            score-=3;
+        }
+
+        // Resets the game
+        if (bn::keypad::start_pressed()) {
+            player.set_x(PLAYER_X);
+            player.set_y(PLAYER_Y);
+            treasure.set_x(TREASURE_X);
+            treasure.set_y(TREASURE_Y);
+            obstacle1.set_x(OBSTACLE1_X);
+            obstacle1.set_y(OBSTACLE1_Y);
+            obstacle2.set_x(OBSTACLE2_X);
+            obstacle2.set_y(OBSTACLE2_Y);
+
+            score = 0;
+            aPressed = 0;
         }
 
         // When user wants to reset level
